@@ -209,6 +209,15 @@ buffer."
   (propertize " " 'face 'popup-scroll-bar-background-face)
   "Background character for scroll-bar.")
 
+(defcustom popup-default-margin-left 0
+  "The default left margin if not specified in calls to popup-create."
+  :type 'integer
+  :group 'popup)
+
+(defcustom popup-default-margin-right 0
+  "The default right margin if not specified in calls to popup-create."
+  :type 'integer
+  :group 'popup)
 (cl-defstruct popup
   point row column width height min-height direction overlays keymap
   parent depth
@@ -499,8 +508,8 @@ popup will be a root instance.
 PARENT-OFFSET is a row offset from the parent popup.
 
 KEYMAP is a keymap that will be put on the popup contents."
-  (or margin-left (setq margin-left 0))
-  (or margin-right (setq margin-right 0))
+  (or margin-left (setq margin-left popup-default-margin-left))
+  (or margin-right (setq margin-right popup-default-margin-right))
   (unless point
     (setq point
           (if parent (popup-child-point parent parent-offset) (point))))
